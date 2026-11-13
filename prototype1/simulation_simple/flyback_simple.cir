@@ -1,7 +1,7 @@
 * Prototype 1 - simplest useful model of the flyback converter (ngspice)
 * Run:  ngspice -b flyback_simple.cir
 * No vendor models and no subcircuits. Every value is a datasheet number
-* or follows from one; see README.md in this directory.
+* or is fitted to datasheet data; see README.md in this directory.
 
 .param VIN=5          ; supply voltage, V
 .param FSW=100k       ; switching frequency, Hz
@@ -15,7 +15,7 @@ VIN   vin 0 {VIN}
 
 * --- gate drive: ideal 0-5 V pulse behind the driver output resistance ------
 VDRV  drv 0 PULSE(0 {VIN} 0 10n 10n {DUTY*TSW - 10n} {TSW})
-RDRV  drv g1 3.4      ; MCP1407 output resistance at 5 V (4.0 up, 2.7 down)
+RDRV  drv gate 3.4     ; MCP1407 output resistance at 5 V (4.0 up, 2.7 down)
 
 * --- transformer DA2033-AL: Lp, Ls = N^2 Lp, leakage, winding resistance ----
 RP    vin p1 15m
@@ -24,15 +24,11 @@ LS    0 s1 1m
 RS    s1 sec 1.1
 KT    LP LS 0.99277   ; leakage 0.144 uH: k = sqrt(1 - Llk/Lp)
 
-* --- MOSFET CSD18533KCS: switch + three constant capacitors + body diode ----
-RG    g1 gate 1.4     ; internal gate resistance
-CGS   gate 0 2413p    ; Ciss - Crss
-CGD   gate drain 130p ; Qgd / 30 V
-CDS   drain 0 903p    ; Qoss / 30 V - Cgd
-SQ1   drain 0 gate 0 QSW
-DQ1   0 drain DBODY
-.model QSW SW(vt=1.9 vh=0.1 ron=6.9m roff=100meg)
-.model DBODY D(is=1n n=1 rs=2m)
+* --- MOSFET CSD18533KCS: ngspice VDMOS model built from datasheet values -----
+M1    drain gate 0 CSD18533
+.model CSD18533 VDMOS(vto=1.9 kp=150 ksubthres=0.02 rd=2.3m rs=2.0m rg=1.4
++ cgs=2413p cgdmax=450p cgdmin=4p a=0.3 cjo=8.9n vj=0.8 m=0.95
++ is=0.9n n=1 rb=2m bv=60 ibv=250u)
 
 * --- output diode QH05TZ600 --------------------------------------------------
 D1    sec out DOUT
