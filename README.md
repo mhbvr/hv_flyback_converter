@@ -13,4 +13,6 @@ under closed-loop voltage regulation.
 | Path | Contents |
 |---|---|
 | `docs/theory.md` | Derivation of the DCM design equations: peak currents, demagnetization time, DCM limit, maximum output current, voltage stresses and output ripple |
+| `docs/datasheets/` | Links to component datasheets |
+| `prototype1/` | First bench prototype: components and ideal characteristics |
 | `docs/img/` | Circuit diagram and the original hand-written derivation sheets |
