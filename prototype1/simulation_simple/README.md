@@ -7,7 +7,7 @@ sources. Every value is a number from a datasheet in
 [`docs/datasheets`](../../docs/datasheets/README.md) or follows from one by
 the formula given below.
 
-The more detailed model is in [`../simulation`](../simulation).
+The more detailed model is in [`../simulation_vendor`](../simulation_vendor).
 
 | File | Contents |
 |---|---|
@@ -131,7 +131,7 @@ Two coupled inductors with their winding resistances.
 
 ## What is left out
 
-Compared with the detailed model in [`../simulation`](../simulation):
+Compared with the detailed model in [`../simulation_vendor`](../simulation_vendor):
 
 - Gate driver delay, input thresholds and separate pull-up and pull-down
   resistances.

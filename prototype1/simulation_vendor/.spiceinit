@@ -1,0 +1,2 @@
+* PSpice compatibility for the TI model, applied to the whole netlist
+set ngbehavior=psa

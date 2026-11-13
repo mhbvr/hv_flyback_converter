@@ -95,23 +95,23 @@ enabling the PWM, and start from a low duty cycle.
 
 ## Simulation
 
-The folder [`simulation`](simulation) holds an ngspice model of the schematic
+The folder [`simulation_vendor`](simulation_vendor) holds an ngspice model of the schematic
 above. It contains only the parts of the prototype, each with its own
 parasitics taken from the datasheets in `docs/datasheets`.
 
 | File | Contents |
 |---|---|
-| `simulation/prototype1.cir` | Main netlist: circuit, analysis and measurements |
-| `simulation/models/da2033al.lib` | Transformer |
-| `simulation/models/csd18533kcs_datasheet.lib` | MOSFET |
-| `simulation/models/qh05tz600_datasheet.lib` | Output diode |
-| `simulation/models/mcp1407_behavioral.lib` | Gate driver |
-| `simulation/plot_waveforms.py` | Plots the saved waveforms (needs numpy and matplotlib) |
-| `simulation/simulated_circuit.svg` | The circuit as simulated |
+| `simulation_vendor/prototype1.cir` | Main netlist: circuit, analysis and measurements |
+| `simulation_vendor/models/da2033al.lib` | Transformer |
+| `simulation_vendor/models/csd18533kcs_datasheet.lib` | MOSFET |
+| `simulation_vendor/models/qh05tz600_datasheet.lib` | Output diode |
+| `simulation_vendor/models/mcp1407_behavioral.lib` | Gate driver |
+| `simulation_vendor/plot_waveforms.py` | Plots the saved waveforms (needs numpy and matplotlib) |
+| `simulation_vendor/simulated_circuit.svg` | The circuit as simulated |
 
 ### Simulated circuit
 
-![Circuit as simulated](simulation/simulated_circuit.svg)
+![Circuit as simulated](simulation_vendor/simulated_circuit.svg)
 
 This is the netlist drawn out: the prototype schematic with the parasitic
 elements of each part added. Element names match `prototype1.cir` and the
@@ -121,7 +121,7 @@ diode are subcircuits; their contents are described below.
 ### Running it
 
 ```
-cd prototype1/simulation
+cd prototype1/simulation_vendor
 ngspice -b prototype1.cir
 python3 plot_waveforms.py
 ```
@@ -150,7 +150,7 @@ from datasheet values as described below.
 | MKS4, electrolytic, ceramic | None found | Series R-L-C |
 
 The TI model could not be downloaded from the environment this was written
-in. To use it, download the ZIP, put the `.lib` file in `simulation/models/`
+in. To use it, download the ZIP, put the `.lib` file in `simulation_vendor/models/`
 as `CSD18533KCS.lib`, and swap the two `.include` lines in the netlist. The
 pin order must be drain, gate, source. This has not been tested.
 
@@ -271,7 +271,7 @@ At `DUTY` = 0.49 and `RLOAD` = 9.63 kΩ, steady state:
 | Ripple on the capacitance of C3 | 67 mV | 69 mV |
 | Ripple at the output terminals | 9.3 V peak to peak | – |
 
-![Simulated waveforms](simulation/waveforms.svg)
+![Simulated waveforms](simulation_vendor/waveforms.svg)
 
 What the simulation shows beyond the ideal theory:
 
