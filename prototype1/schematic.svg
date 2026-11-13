@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" width="860" height="420" font-family="Helvetica, Arial, sans-serif" font-size="14">
+  <rect width="860" height="420" fill="#ffffff"/>
+  <g fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- +5 V rail -->
+    <path d="M66 60 H470 V80"/>
+    <!-- C1 input capacitor -->
+    <path d="M130 60 V140 M114 140 H146 M114 152 H146 M130 152 V220"/>
+    <path d="M116 220 H144 M121 227 H139 M126 234 H134"/>
+    <!-- C2 bypass capacitor -->
+    <path d="M230 60 V140 M214 140 H246 M214 152 H246 M230 152 V220"/>
+    <path d="M216 220 H244 M221 227 H239 M226 234 H234"/>
+    <!-- U1 gate driver -->
+    <path d="M290 262 L290 318 L340 290 Z"/>
+    <path d="M308 60 V272"/>
+    <path d="M308 308 V350"/>
+    <path d="M294 350 H322 M299 357 H317 M304 364 H312"/>
+    <path d="M176 290 H290"/>
+    <path d="M340 290 H450"/>
+    <!-- Q1 MOSFET -->
+    <path d="M450 270 V310"/>
+    <path d="M458 265 V315"/>
+    <path d="M458 275 H470 V200"/>
+    <path d="M458 305 H470 V350"/>
+    <path d="M456 350 H484 M461 357 H479 M466 364 H474"/>
+    <!-- T1 primary, core, secondary -->
+    <path d="M470 80 a15 15 0 0 0 0 30 a15 15 0 0 0 0 30 a15 15 0 0 0 0 30 a15 15 0 0 0 0 30"/>
+    <path d="M486 78 V202 M494 78 V202"/>
+    <path d="M510 80 a15 15 0 0 1 0 30 a15 15 0 0 1 0 30 a15 15 0 0 1 0 30 a15 15 0 0 1 0 30"/>
+    <!-- secondary top, diode, output rail -->
+    <path d="M510 80 V60 H580"/>
+    <path d="M604 47 V73"/>
+    <path d="M604 60 H794"/>
+    <!-- secondary bottom rail -->
+    <path d="M510 200 V240 H750"/>
+    <path d="M580 240 V262 M566 262 H594 M571 269 H589 M576 276 H584"/>
+    <!-- C3 output capacitor -->
+    <path d="M680 60 V142 M664 142 H696 M664 154 H696 M680 154 V240"/>
+    <!-- load -->
+    <path d="M750 60 V110 M750 190 V240"/>
+    <rect x="739" y="110" width="22" height="80"/>
+    <!-- terminals -->
+    <circle cx="60" cy="60" r="6" fill="#ffffff"/>
+    <circle cx="800" cy="60" r="6" fill="#ffffff"/>
+    <circle cx="170" cy="290" r="6" fill="#ffffff"/>
+  </g>
+  <g fill="#111111" stroke="none">
+    <path d="M580 47 L604 60 L580 73 Z"/>
+    <path d="M459 305 L469 300 L469 310 Z"/>
+    <circle cx="456" cy="70" r="4"/>
+    <circle cx="524" cy="212" r="4"/>
+    <circle cx="130" cy="60" r="3.5"/>
+    <circle cx="230" cy="60" r="3.5"/>
+    <circle cx="308" cy="60" r="3.5"/>
+    <circle cx="680" cy="60" r="3.5"/>
+    <circle cx="750" cy="60" r="3.5"/>
+    <circle cx="680" cy="240" r="3.5"/>
+    <circle cx="580" cy="240" r="3.5"/>
+    <text x="40" y="40">+5 V</text>
+    <text x="770" y="40">V<tspan font-size="10" dy="4">out</tspan></text>
+    <text x="60" y="262">Flipper Zero</text>
+    <text x="60" y="320">PWM, 3.3 V</text>
+    <text x="50" y="140">C1</text>
+    <text x="50" y="158">1000 µF</text>
+    <text x="50" y="176">50 V</text>
+    <text x="158" y="140">C2</text>
+    <text x="158" y="158">1 µF</text>
+    <text x="158" y="176">ceramic</text>
+    <text x="322" y="255">U1</text>
+    <text x="322" y="335">MCP1407</text>
+    <text x="482" y="282">Q1</text>
+    <text x="482" y="300">CSD18533KCS</text>
+    <text x="452" y="32">T1  DA2033-AL</text>
+    <text x="474" y="50">1 : 10</text>
+    <text x="566" y="96">D1  QH05TZ600</text>
+    <text x="598" y="140">C3</text>
+    <text x="598" y="158">2.2 µF</text>
+    <text x="598" y="176">400 V</text>
+    <text x="772" y="156">Load</text>
+  </g>
+</svg>
