@@ -1,0 +1,102 @@
+* Prototype 1 - flyback boost converter for nixie tubes, open loop
+* ngspice netlist. Run:  ngspice -b prototype1.cir
+*
+* Only the parts of the prototype are modelled, with their own parasitics.
+* No snubber, no clamp, no feedback, no wiring parasitics.
+* See ../README.md for the schematic and for how every value was chosen.
+
+.param VIN=5          ; supply voltage, V
+.param FSW=100k       ; switching frequency, Hz
+.param DUTY=0.49      ; duty cycle set on the Flipper Zero
+.param RLOAD=9.63k    ; load resistance, ohm
+.param VPWM=3.3       ; Flipper Zero logic-high level, V
+.param TEDGE=10n      ; Flipper Zero edge time (assumed)
+.param TSW={1/FSW}
+
+* --- models ---------------------------------------------------------------
+.include models/da2033al.lib
+.include models/qh05tz600_datasheet.lib
+.include models/mcp1407_behavioral.lib
+* MOSFET: datasheet-based model by default. To use the TI vendor model,
+* download it (see ../README.md), then comment the first line and uncomment
+* the second. The subcircuit pin order must be drain gate source.
+.include models/csd18533kcs_datasheet.lib
+*.include models/CSD18533KCS.lib
+
+* --- supply ---------------------------------------------------------------
+VIN   vin 0 {VIN}
+
+* Input capacitor: Nichicon 1000 uF 50 V aluminium electrolytic
+CIN   vin cin1 1000u ic={VIN}
+RCIN  cin1 cin2 0.1
+LCIN  cin2 0 15n
+
+* Bypass capacitor at the driver supply pin: 1 uF ceramic
+CBYP  vin cby1 1u ic={VIN}
+RCBYP cby1 0 10m
+
+* --- PWM source and gate driver --------------------------------------------
+* Flipper Zero GPIO, 3.3 V push-pull
+VPWM  pwm 0 PULSE(0 {VPWM} 0 {TEDGE} {TEDGE} {DUTY*TSW - TEDGE} {TSW})
+XDRV  pwm vin gate 0 MCP1407
+
+* --- power stage -----------------------------------------------------------
+* Transformer DA2033-AL: primary dot at VIN, secondary dot at ground
+XT1   vin drain 0 sec DA2033AL
+* MOSFET CSD18533KCS: drain gate source
+XQ1   drain gate 0 CSD18533KCS
+* Output diode QH05TZ600: anode cathode
+XD1   sec out QH05TZ600
+
+* Output capacitor: WIMA MKS4 2.2 uF 400 V
+COUT  out co1 2.2u ic=0
+RCOUT co1 co2 22m
+LCOUT co2 0 27n
+
+* Load
+RLOAD out 0 {RLOAD}
+
+* --- analysis --------------------------------------------------------------
+.options method=gear reltol=1e-3 abstol=1n vntol=1u chgtol=1e-14
+.save v(vin) v(pwm) v(gate) v(drain) v(sec) v(out) v(co1) i(vin) @rcout[i] @rload[i]
+.tran 5n 120m 0 50n uic
+
+.control
+set noaskquit
+run
+let iin  = -i(vin)
+let pin  = v(vin)*iin
+let pout = v(out)*@rload[i]
+let vcap = v(out) - v(co1)
+
+* start-up (whole run): worst-case input current and drain voltage
+meas tran iin_startup_max  max iin       from=0 to=120m
+meas tran vds_startup_max  max v(drain)  from=0 to=120m
+
+* steady state: last 20 switching periods
+let t1 = 120m - 200u
+let t2 = 120m
+meas tran vout_avg   avg v(out)      from=t1 to=t2
+meas tran vout_pp    pp  v(out)      from=t1 to=t2
+meas tran vcap_pp    pp  vcap        from=t1 to=t2
+meas tran iout_avg   avg @rload[i]   from=t1 to=t2
+meas tran iin_avg    avg iin         from=t1 to=t2
+meas tran iin_max    max iin         from=t1 to=t2
+let idiode = @rcout[i] + @rload[i]
+meas tran idiode_max max idiode     from=t1 to=t2
+meas tran vds_max    max v(drain)    from=t1 to=t2
+meas tran vsec_min   min v(sec)      from=t1 to=t2
+meas tran pin_avg    avg pin         from=t1 to=t2
+meas tran pout_avg   avg pout        from=t1 to=t2
+let eta = pout_avg/pin_avg
+print eta
+
+* waveforms of the last two periods -> waveforms.txt
+let cut-tstart = 120m - 20u
+let cut-tstop  = 120m
+cutout
+let iin = -i(vin)
+let idiode = @rcout[i] + @rload[i]
+wrdata waveforms.txt v(pwm) v(gate) v(drain) v(sec) v(out) iin idiode
+.endc
+.end
