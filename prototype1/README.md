@@ -113,7 +113,7 @@ At the 3 W point of the ideal table (duty cycle 0.49, load 9.63 kΩ):
 | Peak drain voltage | 52 V | 22 V |
 | Peak diode reverse voltage | 220 V | 220 V |
 
-![Simulated waveforms](simulation_simple/waveforms.svg)
+![Simulated drain voltage](simulation_simple/drain.svg)
 
 The drain voltage spike at turn-off reaches 52 V against the 60 V rating of
 the MOSFET, and nothing in the circuit limits it. The simulation has not been

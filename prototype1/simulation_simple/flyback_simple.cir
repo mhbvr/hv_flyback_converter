@@ -69,11 +69,22 @@ meas tran pdrv_avg   avg pdrv     from=t1 to=t2
 let eta = pout_avg/pin_avg
 print eta
 
-* waveforms of the last two periods -> waveforms.txt
+* waveforms of the last two periods -> five SVG files
 let cut-tstart = 100m - 20u
 let cut-tstop  = 100m
 cutout
 let iin = -i(vin)
-wrdata waveforms.txt v(gate) v(drain) v(sec) v(out) iin i(ls)
+let isec = i(ls)
+let tus = (time - (100m - 20u))*1e6
+set hcopydevtype=svg
+set svg_intopts = ( 800 300 14 0 1 2 0 )
+set color0=white
+set color1=black
+set color2=#2a6fbb
+hardcopy gate.svg  v(gate)  vs tus title 'Gate voltage'      xlabel 'Time, us' ylabel 'V'
+hardcopy drain.svg v(drain) vs tus title 'Drain voltage'     xlabel 'Time, us' ylabel 'V'
+hardcopy iprim.svg iin      vs tus title 'Primary current'   xlabel 'Time, us' ylabel 'A'
+hardcopy isec.svg  isec     vs tus title 'Secondary current' xlabel 'Time, us' ylabel 'mA'
+hardcopy vout.svg  v(out)   vs tus title 'Output voltage'    xlabel 'Time, us' ylabel 'V'
 .endc
 .end
