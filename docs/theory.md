@@ -39,6 +39,14 @@ transformer has no leakage and no winding resistance, and its core is linear
 (unsaturated). $C$ is large enough that $V_{out}$ is constant within one
 period. The converter is in steady state.
 
+**Waveforms in DCM.** The PWM signal drives Q. The primary current $I_p$
+ramps up from zero during $DT$ (§3). At turn-off it stops, and the secondary
+current $I_s$ starts at $I_{s\,max}$ and ramps down to zero in $t_{off}$
+(§4–§6). Both currents are then zero for the rest of the period (the idle
+interval), which is what defines DCM (§7).
+
+![PWM, primary current and secondary current in DCM](img/dcm_waveforms.svg)
+
 ---
 
 ## 2. Flux of a winding

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" width="640" height="470" font-family="Helvetica, Arial, sans-serif" font-size="15">
+  <defs>
+    <marker id="ax" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 1 L9 5 L0 9 Z" fill="#111111"/>
+    </marker>
+    <marker id="dimA" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0 0.5 L8 4 L0 7.5 Z" fill="#555555"/>
+    </marker>
+    <marker id="dimB" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto">
+      <path d="M8 0.5 L0 4 L8 7.5 Z" fill="#555555"/>
+    </marker>
+  </defs>
+  <rect width="640" height="470" fill="#ffffff"/>
+
+  <!-- vertical guide lines at switching instants -->
+  <g stroke="#999999" stroke-width="1" stroke-dasharray="5 4" fill="none">
+    <path d="M180 40 V420"/>
+    <path d="M225 290 V420"/>
+    <path d="M290 40 V420"/>
+    <path d="M380 40 V420"/>
+    <path d="M425 290 V420"/>
+    <path d="M490 40 V420"/>
+    <!-- peak level guides -->
+    <path d="M90 220 H490"/>
+    <path d="M90 350 H490"/>
+  </g>
+
+  <!-- axes -->
+  <g stroke="#111111" stroke-width="1.5" fill="none">
+    <path d="M90 130 V40" marker-end="url(#ax)"/>
+    <path d="M90 130 H580" marker-end="url(#ax)"/>
+    <path d="M90 270 V185" marker-end="url(#ax)"/>
+    <path d="M90 270 H580" marker-end="url(#ax)"/>
+    <path d="M90 410 V315" marker-end="url(#ax)"/>
+    <path d="M90 410 H580" marker-end="url(#ax)"/>
+  </g>
+
+  <!-- waveforms -->
+  <g stroke="#1f5fbf" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <!-- V_pwm -->
+    <path d="M90 130 V70 H180 V130 H290 V70 H380 V130 H490 V70 H540"/>
+    <!-- I_p -->
+    <path d="M90 270 L180 220 V270 H290 L380 220 V270 H490 L540 242"/>
+    <!-- I_s -->
+    <path d="M90 410 H180 V350 L225 410 H380 V350 L425 410 H540"/>
+  </g>
+
+  <!-- dimension arrows -->
+  <g stroke="#555555" stroke-width="1.2" fill="none">
+    <path d="M92 52 H288" marker-start="url(#dimB)" marker-end="url(#dimA)"/>
+    <path d="M92 100 H178" marker-start="url(#dimB)" marker-end="url(#dimA)"/>
+    <path d="M182 432 H223" marker-start="url(#dimB)" marker-end="url(#dimA)"/>
+    <path d="M227 432 H288" marker-start="url(#dimB)" marker-end="url(#dimA)"/>
+  </g>
+
+  <!-- labels -->
+  <g fill="#111111" stroke="none">
+    <text x="36" y="56">V<tspan font-size="11" dy="4">pwm</tspan></text>
+    <text x="52" y="198">I<tspan font-size="11" dy="4">p</tspan></text>
+    <text x="52" y="328">I<tspan font-size="11" dy="4">s</tspan></text>
+    <text x="24" y="225">I<tspan font-size="11" dy="4">p max</tspan></text>
+    <text x="24" y="355">I<tspan font-size="11" dy="4">s max</tspan></text>
+    <text x="586" y="135">t</text>
+    <text x="586" y="275">t</text>
+    <text x="586" y="415">t</text>
+    <text x="184" y="46">T</text>
+    <text x="124" y="94">DT</text>
+    <text x="190" y="452">t<tspan font-size="11" dy="4">off</tspan></text>
+    <text x="242" y="452">idle</text>
+  </g>
+</svg>
