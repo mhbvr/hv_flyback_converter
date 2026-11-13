@@ -4,12 +4,6 @@ This note derives the design equations for the flyback ("boost with a flyback
 transformer") converter that generates the nixie-tube anode voltage. The
 converter operates in **discontinuous conduction mode (DCM)**.
 
-Sections 1–8 are a clean, verified transcription of the hand derivation
-([sheet 1](img/derivation_sheet_1.jpg), [sheet 2](img/derivation_sheet_2.jpg)).
-Section 9 adds results that the sheets do not cover but that the design needs.
-
-All formulas are general; no numerical values are substituted.
-
 ---
 
 ## 1. Circuit, notation and assumptions
