@@ -11,18 +11,17 @@ results can and cannot be trusted for.
 | File | Contents |
 |---|---|
 | `flyback_simple.cir` | Netlist, analysis and measurements |
-| `plot_waveforms.py` | Plots the saved waveforms (needs numpy and matplotlib) |
-| `waveforms.svg` | Result of the plot script |
+| `gate.svg`, `drain.svg`, `iprim.svg`, `isec.svg`, `vout.svg` | Waveform plots written by the run |
 
 ## Running it
 
 ```
 cd prototype1/simulation_simple
 ngspice -b flyback_simple.cir
-python3 plot_waveforms.py
 ```
 
-Tested with ngspice 42; one run takes about a minute. The parameters at the
+Tested with ngspice 42; one run takes about a minute. Nothing else is needed:
+ngspice writes the plots itself. The parameters at the
 top of the netlist set the operating point: `VIN`, `FSW`, `DUTY`, `RLOAD`.
 The default is the 3 W point of the ideal table: `DUTY` = 0.49 and
 `RLOAD` = 9.63 kΩ.
@@ -34,7 +33,9 @@ real value. For another operating point, set `VSTART` to the expected output
 voltage and keep the run at least five time constants long.
 
 The measurements are printed at the end of the run and are taken over the last
-20 switching periods. The last two periods are written to `waveforms.txt`.
+20 switching periods. The last two periods are plotted into the five SVG
+files with the ngspice `hardcopy` command, one signal per file, and each run
+overwrites them.
 
 ## Circuit
 
@@ -245,7 +246,18 @@ The ideal values are from the table in [`../README.md`](../README.md). The
 gate drive power is taken from the `VDRV` source and is not part of the input
 power.
 
-![Simulated waveforms](waveforms.svg)
+Two switching periods in steady state. Time is counted from the start of
+the plotted window, where the MOSFET turns on.
+
+![Gate voltage](gate.svg)
+
+![Drain voltage](drain.svg)
+
+![Primary current](iprim.svg)
+
+![Secondary current](isec.svg)
+
+![Output voltage](vout.svg)
 
 What the simulation shows beyond the ideal theory:
 
